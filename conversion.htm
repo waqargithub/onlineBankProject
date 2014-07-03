@@ -1,0 +1,97 @@
+<!DOCTYPE html >
+<html lang="en" >
+    <head>
+        <title>
+          Express Conversion Result 
+        </title>    
+        <meta charset="utf-8" />
+
+
+        <!-- This is where your link tag goes when linking to an external style sheet. -->
+        <link rel="stylesheet" href="currencyConversion.css" type="text/css">
+ 
+        <!--This is the format you will use when entering JavaScript -->
+        
+        <script type="text/javascript" src="jsFiles/tomorrow.js">
+        </script>
+        <script type="text/javascript" src="jsFiles/defineArrayOfMonths.js">
+        </script>
+        <script type="text/javascript" src="jsFiles/printDatesTodayTomorrow.js">
+        </script>
+        <script type="text/javascript" src="jsFiles/defineConversionRates.js">
+        </script>
+        <script type="text/javascript" src="jsFiles/defineCurrencyAbbreviations.js">
+        </script>
+        
+        <script type="text/javascript">
+        /* <![CDATA[ */      
+
+
+
+        /* ]]> */
+        </script>    
+    
+    </head>
+
+    <body> 
+        <div>   
+            
+        <script type="text/javascript">
+        /* <![CDATA[ */      
+
+        var formData = location.search;
+        formData = formData.substring(1, formData.length);
+           
+        while (formData.indexOf("+") != -1) {
+            formData = formData.replace("+", " ");
+        }
+        while (formData.indexOf("=") != -1) {
+            formData = formData.replace("=", "&");
+        }
+        
+        formData = unescape(formData);
+            
+        var formArray = formData.split("&");
+        
+        var dollarAmountIndex = 1;
+        var currencyDesiredIndex = 3;
+        var usernameIndex = 5;
+
+        document.write("<h2>Hello, " + formArray[usernameIndex] + "!</h2>");
+        document.write("<p>Thank you for using Express Conversion!</p>");
+        var dollarAmount = formArray[dollarAmountIndex];
+        var currencyDesired = formArray[currencyDesiredIndex];
+
+        var conversionResult = 0;
+        var currencyAbbreviation = "";
+        switch (currencyDesired) {
+            case "euros":
+                conversionResult = dollarAmount * euroPerDollar;
+                currencyAbbreviation = euroAbbreviation;
+                break;
+            case "gbPound":
+                conversionResult = dollarAmount * gbPoundPerDollar;
+                currencyAbbreviation = gbPoundAbbreviation;
+                break;
+            case "yen":
+                conversionResult = dollarAmount * yenPerDollar;
+                currencyAbbreviation = yenAbbreviation;
+                break;
+            default:
+                conversionResult = -1;
+        }
+        if (conversionResult != -1)
+            document.write(dollarAmount + " USD = " + conversionResult.toFixed(2) + "&nbsp;" + currencyAbbreviation);
+        else
+            document.write("Error occurred. Tech Support has been notified.");
+        /* ]]> */
+        </script>
+        <br>
+        <br>
+        <button onclick="window.history.go(-1)">More Currency Conversion</button>
+        <button onclick="window.history.go(-2)">Back to Main Page</button>
+        <script type="text/javascript" src="../../validation.js">
+        </script>     
+        </div>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+    body {  color:black;
+            background-color: #99cccc;
+            background-image: url(images/worldTravel6.jpg);
+            background-repeat:no-repeat;
+            background-size: 100%;
+            
+         }
+    a:link {color: #006;}
+    table, th, td
+    {
+    border: 1px solid black;
+    border-collapse: collapse;
+    }
+    
+    #welcomeImage {
+        opacity: 0.0;
+        width: auto;
+        margin-left: 10em;
+        margin-right: 10em;
+    }
+    
+

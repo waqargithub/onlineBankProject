@@ -1,0 +1,136 @@
+<!DOCTYPE html >
+<html lang="en" >
+<head>
+    <title>
+      Weather
+    </title>    
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="currencyConversion.css" type="text/css">
+    
+    <style type="text/css">
+        p, td {
+        font-family:arial; font-size:11px; color:black;
+        }
+    </style>
+
+
+
+
+ <!-- This is where your link tag goes when linking to an external style sheet. -->
+ 
+<!--This is the format you will use when entering JavaScript -->    
+<script type="text/javascript">
+/* <![CDATA[ */
+
+var httpRequest = false;
+//var zip = document.forms[0].zip.value;
+
+function getRequestObject() {
+  try {
+    httpRequest = new XMLHttpRequest();
+  }
+  catch (requestError) {
+    try {
+      httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+    }
+    catch (requestError) {
+      try {
+        httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      catch (requestError) {
+        window.alert("Your browser does not support AJAX!");
+        return false;
+      }
+    }
+  }
+  return httpRequest;
+}
+
+function weatherUpdate() {
+    if (!httpRequest)
+        httpRequest = getRequestObject();
+    var zip = document.forms[0].zip.value;
+    httpRequest.abort();
+    httpRequest.open("get", "WeatherReport.php?zip=" + zip, true);
+    httpRequest.send(null);
+    httpRequest.onreadystatechange = fillWeatherInfo;
+}
+
+function fillWeatherInfo() {
+    if (httpRequest.readyState==4 && httpRequest.status == 200) {
+        var weather = httpRequest.responseXML;
+        var weatherItems=weather.getElementsByTagName("item");
+        var zip = document.forms[0].zip.value;
+        var validZip = /\d{5}/.test(zip);
+        if (validZip == true) {
+            for (var i=0; i<weatherItems.length; ++i) {
+                var curHeadline = weatherItems[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+                var curLink = weatherItems[i].getElementsByTagName("link")[0].childNodes[0].nodeValue;
+                var curPubDate = weatherItems[i].getElementsByTagName("pubDate")[0].childNodes[0].nodeValue;
+                var curDesc = weatherItems[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
+                var weatherSpot = document.getElementById('weatherPara');
+                var curStory = "<a href='" + curLink + "'>" + curHeadline + "</a><br />";
+                curStory += "<span style='color: white'>" + curPubDate + "</span><br />";
+                curStory += curDesc + "<br />";
+                weatherSpot.innerHTML= curStory;
+            }
+        }
+        else
+        window.alert("Invalid ZIP code.");
+        document.forms[0].zip.focus();
+    }
+}
+
+
+
+/* ]]> */
+</script>    
+    
+</head>
+
+<body>
+ <div>
+    
+                <script type="text/javascript">
+            /* <![CDATA[ */
+            var formData = location.search;
+            formData = formData.substring(1, formData.length);
+               
+            while (formData.indexOf("+") != -1) {
+                formData = formData.replace("+", " ");
+            }
+            while (formData.indexOf("=") != -1) {
+                formData = formData.replace("=", "&");
+            }
+            
+            formData = unescape(formData);
+            
+            
+            var formArray = formData.split("&");
+            var nameIndex = 1;
+            document.write("<h1>Hello, " + formArray[nameIndex] + "!</h1>");
+            /* ]]> */
+         
+        </script>
+    
+<h2>Your Weather Report</h2>
+<form method="get" action="" >
+<p>
+    ZIP code <input type="text" name="zip" value="">
+    <input type="button" value="Check Weather" onclick="weatherUpdate()">
+</p>
+</form>
+<p id="weatherPara"></p>
+
+
+  
+
+
+
+<!-- external javascript for validation -->  
+<script type="text/javascript" src="../../validation.js">
+</script>    
+
+</div>
+  </body>
+  </html>

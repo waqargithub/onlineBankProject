@@ -1,0 +1,108 @@
+<!DOCTYPE html >
+<html lang="en" >
+    <head>
+        <title>
+          Express Currency Conversion 
+        </title>    
+        <meta charset="utf-8" />
+
+
+        <!-- This is where your link tag goes when linking to an external style sheet. -->
+        <link rel="stylesheet" href="currencyConversion.css" type="text/css">
+ 
+        <!--This is the format you will use when entering JavaScript -->
+        
+        <script type="text/javascript" src="jsFiles/tomorrow.js">
+        </script>
+        <script type="text/javascript" src="jsFiles/defineArrayOfMonths.js">
+        </script>
+        <script type="text/javascript" src="jsFiles/printDatesTodayTomorrow.js">
+        </script>
+        
+        
+        
+        <script type="text/javascript">
+        /* <![CDATA[ */      
+        function confirmSubmit(){
+            var currencyNotNumerical = isNaN(document.forms[0].dollarAmount.value);
+            var currencySelected = false;
+            if (document.forms[0].dollarAmount.value == "") {
+                window.alert("Please enter an amount to convert");
+                document.forms[0].dollarAmount.focus();
+                return false;
+            }
+            else if (currencyNotNumerical == true) {
+                window.alert("Please enter a numerical value for currency to convert.");
+                document.forms[0].dollarAmount.focus();
+                return false;
+            }
+            else {                
+                for (i=0; i<3; i++) {
+                    if (document.forms[0].currencyDesired[i].checked == true) {
+                        currencySelected = true;
+                        break;
+                    }
+                }
+                if (currencySelected == false) {
+                    window.alert("Please select the currency to which you wish to convert.");
+                    return false;
+                }
+            }
+            document.forms[0].username.value = formArray[nameIndex]
+            return true;
+        }    
+        /* ]]> */
+        </script>    
+    
+    </head>
+
+    
+    <body> 
+        <div>
+            <script type="text/javascript">
+            /* <![CDATA[ */
+            var formData = location.search;
+            formData = formData.substring(1, formData.length);
+               
+            while (formData.indexOf("+") != -1) {
+                formData = formData.replace("+", " ");
+            }
+            while (formData.indexOf("=") != -1) {
+                formData = formData.replace("=", "&");
+            }
+            
+            formData = unescape(formData);
+            
+            
+            var formArray = formData.split("&");
+            var nameIndex = 1;
+            document.write("<h2>Hello, " + formArray[nameIndex] + "!</h2>");
+            /* ]]> */
+         
+        </script>
+            <form action="conversion.htm" method="get" onsubmit="return confirmSubmit();">
+                Amount of US Dollars You Wish to Convert?
+                <br>
+                $<input type="text" name="dollarAmount" value="">
+                <br>
+                <br>    
+                Desired Currency?
+                <br>
+                <input type="radio" name="currencyDesired" value="euros">Euros<br>
+                <input type="radio" name="currencyDesired" value="gbPound">GBPound<br>
+                <input type="radio" name="currencyDesired" value="yen">Yen<br>
+                <p><input type="submit" value="Convert">&nbsp;
+                <input type="reset"></p>
+                <input type="hidden" name="username" value="">
+            </form>
+            
+            <button onclick="window.history.go(-1)">Back to Main Page</button>
+            
+            
+            
+            <!-- external javascript for validation -->  
+            <script type="text/javascript" src="../../validation.js">
+            </script>    
+        </div>
+    </body>
+</html>

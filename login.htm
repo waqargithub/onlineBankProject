@@ -1,0 +1,147 @@
+<!DOCTYPE html >
+<html lang="en" >
+    <head>
+        <title>
+          Express Currency Welcome 
+        </title>    
+        <meta charset="utf-8" />
+
+
+        <!-- Link to an external style sheet. -->
+
+        <link rel="stylesheet" href="currencyConversion.css" type="text/css">
+            
+        <style>
+        </style>
+ 
+        <!--scripts needed to print today and tomorrow's date -->
+        
+        <script type="text/javascript" src="jsFiles/tomorrow.js">
+        </script>
+        <script type="text/javascript" src="jsFiles/defineArrayOfMonths.js">
+        </script>
+        
+        <script type="text/javascript">
+        /* <![CDATA[ */
+        document.write("<h2>");
+        document.write("Welcome! Today's date is ");
+        document.write(months[dateToday.getMonth()]+"&nbsp;"+dateToday.getDate()+","+"&nbsp;"+dateToday.getFullYear()+". ");
+        document.write("All transactions will be effective ");
+        document.write(months[dateTomorrow.getMonth()]+"&nbsp;"+dateTomorrow.getDate()+","+"&nbsp;"+dateTomorrow.getFullYear()+".");
+        document.write("</h2>");
+        
+        //create image object for maps of partner locations
+        
+        var northPartners = new Image();
+        northPartners.src = "images/northPartners.jpg";
+        var southPartners = new Image();
+        southPartners.src = "images/southPartners.jpg";
+
+        function imageDisplay() {
+            if (document.getElementById("imageDisplayChoice").innerHTML == "See partner locations") {
+                document.getElementById("imageDisplayChoice").innerHTML = "Hide map";
+                toggleImage();
+                document.getElementById("welcomeImage").style.opacity="0.9";
+            }
+            else {
+                document.getElementById("imageDisplayChoice").innerHTML = "See partner locations";
+                document.getElementById("textImageLink").innerHTML = "&nbsp;"
+                document.getElementById("welcomeImage").style.opacity="0.0";
+            }
+        }    
+        
+        function toggleImage() {
+            if (document.getElementById("textImageLink").innerHTML == "See south partner locations") {
+                document.getElementById("welcomeImage").src = southPartners.src;
+                document.getElementById("textImageLink").innerHTML = "See north partner locations";
+            }
+            else {
+                document.getElementById("welcomeImage").src = northPartners.src;
+                document.getElementById("textImageLink").innerHTML = "See south partner locations";
+            }
+        }    
+        
+        var defaultUsername = "Enter Username";
+        
+        function checkLogin() {
+            if (document.forms[0].username.value == defaultUsername) {
+                window.alert("Please enter a username");
+                document.forms[0].username.focus();
+                inputFocus(document.forms[0].username, defaultUsername);
+                return false;
+            }
+            return true;
+        }
+        
+        function inputFocus(input, defaultInputValue) {
+            if (input.value == defaultInputValue) {
+                input.style.color = "#000";
+                input.value = "";
+            }
+        }
+        
+        function inputBlur(input, defaultInputValue) {
+            if (input.value == "") {
+                input.style.color = "#888";
+                input.value = defaultInputValue;
+            }
+        }
+        
+        
+        
+        /* ]]> */
+        </script>
+
+    
+    
+    </head>
+
+    <body> 
+        <div> 
+            <!-- Your HTML here -->
+            <hr>
+            <form method="post" action="">
+                <br>
+                Username<br>
+                <input type="text" name="username" style="color:GRAY;" value="Enter Username"
+                       onfocus="inputFocus(this, 'Enter Username');" onblur="inputBlur(this, 'Enter Username');">
+                <br>
+                <p><input type="button" id="withdrawButton" value="Withdraw"
+                           onclick="if (checkLogin() == true) {location.href='ATMWithdrawal.php';}
+                           return true;">&nbsp;&nbsp;
+                    <input type="button" id="depositButton" value="Deposit"
+                           onclick="if (checkLogin() == true) {location.href='ATMDeposit.php';}
+                           return true;">&nbsp;&nbsp;
+                    <input type="button" id="checkBalanceButton" value="Check Balance"
+                           onclick="if (checkLogin() == true) {location.href='ATMBalance.php';}
+                           return true;">&nbsp;&nbsp;
+                    <input type="button" id="listTransactions" value="List Transactions"
+                           onclick="if (checkLogin() == true) {location.href='ATMTransactions.php';}
+                           return true;">&nbsp;&nbsp;                           
+                    <input type="button" id="moneyExchangeButton" value="Money Exchange"
+                           onclick="if (checkLogin() == true) {location.href='currency.htm' + '?' + 'username='+ document.forms[0].username.value;}
+                           return true;">&nbsp;&nbsp;
+                    <input type="button" id="weatherButton" value="Weather"
+                           onclick="if (checkLogin() == true) {location.href='weather.htm' + '?' + 'username='+ document.forms[0].username.value;}
+                           return true;">&nbsp;&nbsp;
+                </p>
+                
+            
+            </form>  
+            
+            <a href="#" id="imageDisplayChoice" onclick="imageDisplay();">See partner locations</a>
+            <br>
+            <br>
+            <a href="#" id="textImageLink" onclick="toggleImage(); return false;">&nbsp;</a>
+            <br>
+            <a href="#" id="picImageLink" onclick="toggleImage(); return false;"><img src="" id="welcomeImage"
+                alt="alternating image of maps of north and south partner locations">
+            </a>
+            
+            <!-- external javascript for validation -->  
+            <script type="text/javascript" src="../../validation.js">
+            </script>    
+
+        </div>
+    </body>
+</html>
